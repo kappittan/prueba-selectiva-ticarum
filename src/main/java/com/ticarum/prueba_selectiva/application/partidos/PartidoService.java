@@ -1,4 +1,4 @@
-package com.ticarum.prueba_selectiva.application;
+package com.ticarum.prueba_selectiva.application.partidos;
 
 import java.util.UUID;
 

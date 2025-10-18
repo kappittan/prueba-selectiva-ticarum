@@ -1,4 +1,4 @@
-package com.ticarum.prueba_selectiva.application;
+package com.ticarum.prueba_selectiva.application.equipos;
 
 import java.util.UUID;
 
@@ -20,14 +20,15 @@ public class EquipoServiceImpl implements EquipoService {
     private EquipoRepository equipoRepository;
 
     @Override
-    public Equipo añadirEquipo(UUID competicionId, EquipoCreateDTO equipoValues) {
-        // 1. Comprobamos que el nombre del equipo no esté ya en uso
+    public Equipo crearEquipo(EquipoCreateDTO equipoValues) {
+        // 1. Comprobamos que el nombre del equipo no esté ya en uso, es decir, que no
+        // se haya registrado ya en la competición
         if (equipoRepository.findByNombre(equipoValues.getNombre()).size() > 0) {
             throw new ExcepcionNombreEquipoNoDisponible();
         }
 
         // 2. Creamos el nuevo equipo
-        Equipo nuevoEquipo = new Equipo(equipoValues.getNombre(), competicionId);
+        Equipo nuevoEquipo = new Equipo(equipoValues.getNombre());
 
         // 3. Guardamos el equipo en la base de datos
         EquipoEntity entidad = equipoRepository.save(EquipoMapper.toEntity(nuevoEquipo));
@@ -45,6 +46,26 @@ public class EquipoServiceImpl implements EquipoService {
 
         // 2. Obtenemos el equipo de la base de datos y lo convertimos a dominio
         return EquipoMapper.toDomain(equipoRepository.findById(equipoId).get());
+    }
+
+    @Override
+    public Equipo añadirEquipoACompeticion(UUID equipoId, UUID competicionId) {
+        // 1. Validamos que el equipo exista
+        if (!this.equipoRepository.findById(equipoId).isPresent()) {
+            throw new ExcepcionEquipoNoEncontrado(equipoId);
+        }
+
+        // 2. Obtenemos el equipo de la base de datos y lo convertimos a dominio
+        Equipo equipo = EquipoMapper.toDomain(equipoRepository.findById(equipoId).get());
+
+        // 3. Añadimos la competición al equipo
+        equipo.añadirCompeticionActiva(competicionId);
+
+        // 4. Guardamos el equipo actualizado en la base de datos
+        EquipoEntity entidadActualizada = equipoRepository.save(EquipoMapper.toEntity(equipo));
+
+        // 5. Devolvemos el equipo actualizado convertido a dominio
+        return EquipoMapper.toDomain(entidadActualizada);
     }
 
 }

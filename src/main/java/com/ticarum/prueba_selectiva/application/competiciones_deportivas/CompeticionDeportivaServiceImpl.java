@@ -1,4 +1,4 @@
-package com.ticarum.prueba_selectiva.application;
+package com.ticarum.prueba_selectiva.application.competiciones_deportivas;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -12,12 +12,14 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ticarum.prueba_selectiva.application.equipos.EquipoService;
+import com.ticarum.prueba_selectiva.application.jornadas.JornadaService;
+import com.ticarum.prueba_selectiva.application.partidos.PartidoService;
 import com.ticarum.prueba_selectiva.domain.model.CompeticionDeportiva;
 import com.ticarum.prueba_selectiva.domain.model.Equipo;
 import com.ticarum.prueba_selectiva.domain.model.Jornada;
 import com.ticarum.prueba_selectiva.domain.model.Partido;
 import com.ticarum.prueba_selectiva.dto.CompeticionDeportivaCreateDTO;
-import com.ticarum.prueba_selectiva.dto.EquipoCreateDTO;
 import com.ticarum.prueba_selectiva.dto.JornadaCreateDTO;
 import com.ticarum.prueba_selectiva.dto.JornadaDTO;
 import com.ticarum.prueba_selectiva.dto.PartidoCreateDTO;
@@ -135,7 +137,8 @@ public class CompeticionDeportivaServiceImpl implements CompeticionDeportivaServ
         // equipos de la lista y generando partidos.
         List<UUID> partidos = new ArrayList<>();
 
-        for (LocalDate fecha = fechaInicio; fecha.isBefore(fechaFin); fecha = fecha.plusDays(1)) {
+        for (LocalDate fecha = fechaInicio; (fecha.isBefore(fechaFin) || fecha.isEqual(fechaFin)); fecha = fecha
+                .plusDays(1)) {
             for (int pista = 0; pista < (numPistasJornada * 2); pista++) {
 
                 // Si no quedan equipos por emparejar, salimos del bucle
@@ -188,7 +191,7 @@ public class CompeticionDeportivaServiceImpl implements CompeticionDeportivaServ
     }
 
     @Override
-    public CompeticionDeportiva añadirEquipo(UUID competicionId, EquipoCreateDTO equipoValues) {
+    public CompeticionDeportiva añadirEquipo(UUID competicionId, UUID equipoId) {
 
         // 1. Validamos si la competición existe
         if (!this.competicionExiste(competicionId)) {
@@ -200,19 +203,17 @@ public class CompeticionDeportivaServiceImpl implements CompeticionDeportivaServ
         CompeticionDeportiva competicion = CompeticionDeportivaMapper
                 .toDomain(competicionDeportivaRepository.findById(competicionId).get());
 
-        // 3. Creamos el nuevo equipo, asociandolo a la competición
-        Equipo nuevoEquipo = equipoService.añadirEquipo(competicionId, equipoValues);
+        // 3. Actualizamos la competición para añadir el nuevo equipo
+        competicion.registrarEquipo(equipoId);
 
-        // 4. Comprobamos que el equipo no esté ya registrado en la competición
+        // 4. Actualizamos el equipo para añadir la competición deportiva
+        equipoService.añadirEquipoACompeticion(equipoId, competicionId);
 
-        // 5. Actualizamos la competición para añadir el nuevo equipo
-        competicion.registrarEquipo(nuevoEquipo.getId());
-
-        // 6. Guardamos la competición deportiva actualizada en la base de datos
+        // 5. Guardamos la competición deportiva actualizada en la base de datos
         CompeticionDeportivaEntity entidadActualizada = competicionDeportivaRepository
                 .save(CompeticionDeportivaMapper.toPersistence(competicion));
 
-        // 7. Devolvemos la competición deportiva actualizada convertida a dominio
+        // 6. Devolvemos la competición deportiva actualizada convertida a dominio
         return CompeticionDeportivaMapper.toDomain(entidadActualizada);
     }
 
@@ -264,6 +265,34 @@ public class CompeticionDeportivaServiceImpl implements CompeticionDeportivaServ
 
         // 3. Devolvemos la competición deportiva convertida a dominio
         return CompeticionDeportivaMapper.toDomain(entidad);
+    }
+
+    @Override
+    public List<Equipo> obtenerEquiposNoAsignadosAJornada(UUID competicionId) {
+        // 1. Validamos si la competición existe
+        if (!this.competicionExiste(competicionId)) {
+            throw new ExcepcionCompeticionNoEncontrada(competicionId);
+        }
+
+        // 2. Obtemos la competición deportiva del repositorio
+        CompeticionDeportiva competicion = CompeticionDeportivaMapper
+                .toDomain(competicionDeportivaRepository.findById(competicionId).get());
+
+        // 3. Comprobamos si la primera jornada ha sido generada
+        if (!primeraJornadaGenerada(competicion)) {
+            throw new ExcepcionPrimeraJornadaNoGenerada(competicionId);
+        }
+
+        // 4. Obtenemos la primera jornada
+        Jornada primeraJornada = jornadaService.obtenerJornada(competicion.getJornadas().get().get(0));
+
+        // 5. Obtenemos los equipos no asignados de la primera jornada
+        List<UUID> equiposNoAsignadosIds = primeraJornada.getEquiposNoAsignados().orElse(List.of());
+
+        // 6. Mapeamos los equipos a dominio y los devolvemos
+        return equiposNoAsignadosIds.stream()
+                .map(equipoId -> equipoService.getEquipo(equipoId))
+                .toList();
     }
 
 }

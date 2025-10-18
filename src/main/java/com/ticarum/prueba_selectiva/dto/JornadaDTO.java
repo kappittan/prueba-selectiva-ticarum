@@ -7,12 +7,20 @@ import com.ticarum.prueba_selectiva.domain.model.Partido;
 
 public class JornadaDTO {
 
-    List<Partido> partidos;
+    private List<Partido> partidos;
 
-    List<Equipo> equiposNoAsignados;
+    private List<Equipo> equiposNoAsignados;
 
     public JornadaDTO(List<Partido> partidos, List<Equipo> equiposNoAsignados) {
         this.partidos = partidos;
         this.equiposNoAsignados = equiposNoAsignados;
+    }
+
+    public List<Partido> getPartidos() {
+        return this.partidos;
+    }
+
+    public List<Equipo> getEquiposNoAsignados() {
+        return this.equiposNoAsignados;
     }
 }

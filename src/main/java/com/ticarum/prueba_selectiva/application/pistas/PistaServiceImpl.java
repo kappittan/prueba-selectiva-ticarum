@@ -1,4 +1,4 @@
-package com.ticarum.prueba_selectiva.application;
+package com.ticarum.prueba_selectiva.application.pistas;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

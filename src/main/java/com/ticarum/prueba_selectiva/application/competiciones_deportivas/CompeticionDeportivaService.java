@@ -1,4 +1,4 @@
-package com.ticarum.prueba_selectiva.application;
+package com.ticarum.prueba_selectiva.application.competiciones_deportivas;
 
 import java.util.List;
 import java.util.UUID;
@@ -6,7 +6,6 @@ import java.util.UUID;
 import com.ticarum.prueba_selectiva.domain.model.CompeticionDeportiva;
 import com.ticarum.prueba_selectiva.domain.model.Equipo;
 import com.ticarum.prueba_selectiva.dto.CompeticionDeportivaCreateDTO;
-import com.ticarum.prueba_selectiva.dto.EquipoCreateDTO;
 import com.ticarum.prueba_selectiva.dto.JornadaDTO;
 
 public interface CompeticionDeportivaService {
@@ -14,7 +13,7 @@ public interface CompeticionDeportivaService {
 
     CompeticionDeportiva obtenerCompeticion(UUID competicionId);
 
-    CompeticionDeportiva añadirEquipo(UUID competicionId, EquipoCreateDTO equipoValues);
+    CompeticionDeportiva añadirEquipo(UUID competicionId, UUID equipoId);
 
     boolean competicionExiste(UUID competicionId);
 
@@ -23,4 +22,6 @@ public interface CompeticionDeportivaService {
     void generarPrimeraJornada(UUID competicionId);
 
     JornadaDTO obtenerPrimeraJornada(UUID competicionId);
+
+    List<Equipo> obtenerEquiposNoAsignadosAJornada(UUID competicionId);
 }

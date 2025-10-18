@@ -1,4 +1,4 @@
-package com.ticarum.prueba_selectiva.application;
+package com.ticarum.prueba_selectiva.application.competiciones_deportivas;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ticarum.prueba_selectiva.domain.model.CompeticionDeportiva;
 import com.ticarum.prueba_selectiva.domain.model.Equipo;
 import com.ticarum.prueba_selectiva.dto.CompeticionDeportivaCreateDTO;
-import com.ticarum.prueba_selectiva.dto.EquipoCreateDTO;
+import com.ticarum.prueba_selectiva.dto.EquipoRegistrarCompeticionDTO;
 import com.ticarum.prueba_selectiva.dto.JornadaDTO;
 
 import jakarta.validation.Valid;
@@ -44,8 +44,8 @@ public class CompeticionDeportivaController {
     // [Endpoint] POST /competiciones_deportivas/{id}/equipos
     @PostMapping("{id}/equipos")
     ResponseEntity<CompeticionDeportiva> añadirEquipo(@PathVariable UUID id,
-            @Valid @RequestBody EquipoCreateDTO equipoValues) {
-        return ResponseEntity.ok(competicionDeportivaService.añadirEquipo(id, equipoValues));
+            @Valid @RequestBody EquipoRegistrarCompeticionDTO equipoId) {
+        return ResponseEntity.ok(competicionDeportivaService.añadirEquipo(id, equipoId.getEquipo()));
     }
 
     // [Endpoint] GET /competiciones_deportivas/{id}/equipos
@@ -65,6 +65,12 @@ public class CompeticionDeportivaController {
     @GetMapping("{id}/jornadas/1")
     ResponseEntity<JornadaDTO> obtenerPrimeraJornada(@PathVariable UUID id) {
         return ResponseEntity.ok(competicionDeportivaService.obtenerPrimeraJornada(id));
+    }
+
+    // [Endpoint] GET /competiciones_deportivas/{id}/jornadas/1/equipos_no_asignados
+    @GetMapping("{id}/jornadas/1/equipos_no_asignados")
+    ResponseEntity<List<Equipo>> obtenerEquiposNoAsignadosPrimeraJornada(@PathVariable UUID id) {
+        return ResponseEntity.ok(competicionDeportivaService.obtenerEquiposNoAsignadosAJornada(id));
     }
 
 }

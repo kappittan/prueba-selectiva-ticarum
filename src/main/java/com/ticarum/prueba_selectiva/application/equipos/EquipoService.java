@@ -1,4 +1,4 @@
-package com.ticarum.prueba_selectiva.application;
+package com.ticarum.prueba_selectiva.application.equipos;
 
 import java.util.UUID;
 
@@ -7,7 +7,9 @@ import com.ticarum.prueba_selectiva.dto.EquipoCreateDTO;
 
 public interface EquipoService {
 
-    Equipo añadirEquipo(UUID competicionId, EquipoCreateDTO equipoValues);
+    Equipo crearEquipo(EquipoCreateDTO equipoValues);
+
+    Equipo añadirEquipoACompeticion(UUID equipoId, UUID competicionId);
 
     Equipo getEquipo(UUID equipoId);
 }
