@@ -1,0 +1,383 @@
+{
+	"info": {
+		"_postman_id": "16836f76-9940-45f1-a525-9f505de948c8",
+		"name": "Prueba Selectiva TICARUM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49351988",
+		"_collection_link": "https://kappitan-7848124.postman.co/workspace/kappitan's-Workspace~fb8b5911-b179-4bed-8652-a6bdb65864f8/collection/49351988-16836f76-9940-45f1-a525-9f505de948c8?action=share&source=collection_link&creator=49351988"
+	},
+	"item": [
+		{
+			"name": "Registrar una competición",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();",
+							"pm.environment.set(\"competicionId\", responseData.id);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\": \"Torneo Primavera 2026\",\n  \"deporte\": \"FUTBOL\",\n  \"fechaInicio\": \"2026-03-01T09:00:00Z\",\n  \"fechaFin\": \"2026-03-02T09:00:00Z\",\n  \"numPistasJornada\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/competiciones_deportivas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"competiciones_deportivas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar un equipo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();",
+							"pm.environment.set(\"equipo1Id\", responseData.id);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Game of Goles\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/equipos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"equipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar otro equipo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();",
+							"pm.environment.set(\"equipo2Id\", responseData.id);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Inter de Mi Casa\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/equipos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"equipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar un tercer equipo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();",
+							"pm.environment.set(\"equipo3Id\", responseData.id);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Los galácticos\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/equipos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"equipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar el primer equipo en la competición creada",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"equipo\": \"{{equipo1Id}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/competiciones_deportivas/{{competicionId}}/equipos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"competiciones_deportivas",
+						"{{competicionId}}",
+						"equipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar el segundo equipo en la competición creada",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"equipo\": \"{{equipo2Id}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/competiciones_deportivas/{{competicionId}}/equipos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"competiciones_deportivas",
+						"{{competicionId}}",
+						"equipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar el tercer equipo en la competición creada",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"equipo\": \"{{equipo3Id}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/competiciones_deportivas/{{competicionId}}/equipos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"competiciones_deportivas",
+						"{{competicionId}}",
+						"equipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar una competición",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\": \"Torneo Primavera 2026\",\n  \"deporte\": \"FUTBOL\",\n  \"fechaInicio\": \"2026-03-01T09:00:00Z\",\n  \"fechaFin\": \"2026-03-02T09:00:00Z\",\n  \"numPistasJornada\": 1\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/competiciones_deportivas/{{competicionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"competiciones_deportivas",
+						"{{competicionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar equipos de una competición",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/competiciones_deportivas/{{competicionId}}/equipos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"competiciones_deportivas",
+						"{{competicionId}}",
+						"equipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generar la primera jornada de la competición deportiva",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"equipo\": \"{{equipo1Id}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/competiciones_deportivas/{{competicionId}}/generar_primera_jornada",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"competiciones_deportivas",
+						"{{competicionId}}",
+						"generar_primera_jornada"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar la primera jornada de la competición",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/competiciones_deportivas/{{competicionId}}/jornadas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"competiciones_deportivas",
+						"{{competicionId}}",
+						"jornadas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar equipos no asignados de la primera jornada",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/competiciones_deportivas/{{competicionId}}/jornadas/1/equipos_no_asignados",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"competiciones_deportivas",
+						"{{competicionId}}",
+						"jornadas",
+						"1",
+						"equipos_no_asignados"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

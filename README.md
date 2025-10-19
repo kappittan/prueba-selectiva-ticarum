@@ -73,7 +73,7 @@ Para lanzar todos los tests, ejecuta el siguiente comando en una terminal:
 ./mvnw test
 ```
 
-Por otro lado, ha sido necesario realizar el testing de la API REST, verificando que esta es capaz de recibir, procesar y devolver una respuesta adecuada. Para ello, se ha elaborado una colección Postman, la cual se encuentra en [`postman/competiciones-um.json`](postman/competiciones-um.json). En esta colección se encuentran `requests` que permiten probar todos los posibles estados de todos los endpoints.
+Por otro lado, ha sido necesario realizar el testing de la API REST, verificando que esta es capaz de recibir, procesar y devolver una respuesta adecuada. Para ello, se ha elaborado una colección Postman, la cual se encuentra en [`postman/competiciones_deportivas.json`](postman/competiciones_deportivas.json).
 
 ## Notas
 
