@@ -80,3 +80,5 @@ Por otro lado, ha sido necesario realizar el testing de la API REST, verificando
 - Existen clases relacionadas con el concepto `Pista`. Aunque no se hacen uso de ellas en esta versión de la aplicación, las he dejado reflejadas en el código para plantear una posible mejora, donde se puedan dar de altas pistas (con su información propia, como nombre, ubicación, etc.) y asociarlas a una competición deportiva. Esto permitiría asociar una pista a cada partido de cada jornada, lo que aumentaría el potencial de la aplicación.
 
 - He separado el registro de un equipo, del registro de una competición, para que de esta manera un usuario pueda registrarse en el sistema y más tarde, cuando lo necesite, apuntarse a las competiciones deportivas que desee.
+
+- Los datos de prueba se encuentran dentro de cada petición Postman, así que es necesario ejecutar la colección en orden (dejando un par de segundos entre cada petición) para poder ver el funcionamiento de la aplicación.
