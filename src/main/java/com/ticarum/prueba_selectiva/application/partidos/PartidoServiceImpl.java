@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ticarum.prueba_selectiva.domain.model.Partido;
 import com.ticarum.prueba_selectiva.dto.PartidoCreateDTO;
+import com.ticarum.prueba_selectiva.exceptions.partidos.ExcepcionPartidoNoEncontrado;
 import com.ticarum.prueba_selectiva.infra.PartidoRepository;
 import com.ticarum.prueba_selectiva.infra.persistence.PartidoEntity;
 import com.ticarum.prueba_selectiva.mapper.PartidoMapper;
@@ -34,7 +35,7 @@ public class PartidoServiceImpl implements PartidoService {
     public Partido obtenerPartido(UUID partidoId) {
         // 1. Validamos que el partido exista
         if (!this.partidoRepository.findById(partidoId).isPresent()) {
-            throw new RuntimeException("Partido no encontrado: " + partidoId);
+            throw new ExcepcionPartidoNoEncontrado(partidoId);
         }
 
         // 2. Obtenemos el partido de la base de datos

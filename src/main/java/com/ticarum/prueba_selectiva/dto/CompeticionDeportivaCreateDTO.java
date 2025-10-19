@@ -31,6 +31,15 @@ public class CompeticionDeportivaCreateDTO {
     @Max(value = 100, message = "El número de pistas por jornada debe ser como máximo 100")
     private int numPistasJornada;
 
+    public CompeticionDeportivaCreateDTO(String nombre, Deporte deporte, Date fechaInicio, Date fechaFin,
+            int numPistasJornada) {
+        this.nombre = nombre;
+        this.deporte = deporte;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.numPistasJornada = numPistasJornada;
+    }
+
     public String getNombre() {
         return nombre;
     }
