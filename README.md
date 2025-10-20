@@ -17,13 +17,13 @@ Consiste en una aplicación desarrollada en Spring Boot para gestionar competici
 1.  Clonar el repositorio:
 
 ```bash
- git clone https://github.com/usuario/nombre-del-proyecto.git
+ git clone https://github.com/kappittan/prueba-selectiva-ticarum.git
 ```
 
 2. Acceder al directorio del proyecto
 
 ```bash
-  cd nombre-del-proyecto
+  cd prueba-selectiva-ticarum
 ```
 
 3.  Ejecutar la aplicación Spring Boot
